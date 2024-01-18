@@ -15,10 +15,11 @@ export const SContainer = styled.header`
   }
 `;
 
-export const SLogoContainer = styled.div`
+export const SCartContainer = styled.div`
   display: flex;
   align-items: center;
   gap: 1rem;
+  cursor: pointer;
 
   & div {
     display: flex;

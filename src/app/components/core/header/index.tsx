@@ -1,13 +1,19 @@
 'use client';
 import Image from 'next/image';
-import { SContainer, SItensContainer, SLogoContainer } from './styles';
+import { SContainer, SItensContainer, SCartContainer } from './styles';
 import wallet from '@/src/assets/icons/wallet.svg';
+import { useRouter } from 'next/navigation';
 
 const Header: React.FC = () => {
+  const router = useRouter();
+  const onCartClick = () => {
+    router.push('/cart');
+  };
+
   return (
     <SContainer>
       <h3>WeMovies</h3>{' '}
-      <SLogoContainer>
+      <SCartContainer onClick={onCartClick}>
         <div>
           <h5>Meu Carrinho</h5>
           <SItensContainer> 0 itens </SItensContainer>
@@ -18,7 +24,7 @@ const Header: React.FC = () => {
           width={32}
           height={32}
         />
-      </SLogoContainer>
+      </SCartContainer>
     </SContainer>
   );
 };

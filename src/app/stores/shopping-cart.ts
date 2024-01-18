@@ -1,7 +1,7 @@
 import { ICard, IShoppingStore } from '@/src/types/card';
 import { create } from 'zustand';
 
-const useShoppingStore = create<IShoppingStore>((set) => ({
+export const useShoppingStore = create<IShoppingStore>((set) => ({
   items: [],
   addItem: (item: ICard) =>
     set((state) => ({

@@ -2,13 +2,15 @@ import { SContainer } from './styles';
 
 const Button = ({
   leftSlot,
-  children
+  children,
+  props
 }: {
   leftSlot?: React.ReactNode;
   children: React.ReactNode;
+  props?: React.HTMLAttributes<HTMLButtonElement>;
 }) => {
   return (
-    <SContainer>
+    <SContainer {...props}>
       {leftSlot ? leftSlot : null}
       {children}
     </SContainer>

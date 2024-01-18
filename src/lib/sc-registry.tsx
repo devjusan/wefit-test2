@@ -1,7 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import { useServerInsertedHTML } from 'next/navigation';
-import {
+import styled, {
   ServerStyleSheet,
   StyleSheetManager,
   ThemeProvider
@@ -9,6 +9,13 @@ import {
 import { GlobalStyle } from '@/src/styles/global';
 import { theme } from '@/src/styles/theme';
 import Header from '../app/components/core/header';
+
+export const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+`;
 
 export default function StyledComponentsRegistry({
   children
@@ -28,7 +35,7 @@ export default function StyledComponentsRegistry({
       <ThemeProvider theme={theme}>
         <GlobalStyle />
         <Header />
-        {children}
+        <Container>{children}</Container>
       </ThemeProvider>
     );
 
@@ -37,7 +44,7 @@ export default function StyledComponentsRegistry({
       <ThemeProvider theme={theme}>
         <GlobalStyle />
         <Header />
-        {children}
+        <Container>{children}</Container>
       </ThemeProvider>
     </StyleSheetManager>
   );
