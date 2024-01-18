@@ -6,6 +6,7 @@ import Card from './components/ui/card';
 import LoadingSpinner from './loading';
 import { ICard } from '../types/card';
 import { convertToCurrency } from '../utils/format';
+import useFetch from './hooks/useFetch';
 
 const Container = styled.div`
   display: flex;
@@ -17,20 +18,17 @@ const Container = styled.div`
 `;
 
 const Home = () => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [cards, setCards] = useState<Array<ICard>>([]);
+  const { error, isLoading, response } = useFetch<Array<ICard>>(
+    'http://localhost:3333/products'
+  );
 
-  useEffect(() => {
-    fetch('http://localhost:3333/products')
-      .then((res) => res.json())
-      .then((data) => {
-        setCards(data);
-        setIsLoading(false);
-      })
-      .catch(() => {
-        setIsLoading(false);
-      });
-  }, []);
+  if (error) {
+    return (
+      <Container>
+        <h3>Erro ao carregar os dados</h3>
+      </Container>
+    );
+  }
 
   return isLoading ? (
     <div
@@ -46,7 +44,7 @@ const Home = () => {
     </div>
   ) : (
     <Container>
-      {cards.map((card: ICard) => (
+      {response.map((card: ICard) => (
         <Card
           key={card.id}
           title={card.title}
