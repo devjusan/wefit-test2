@@ -25,14 +25,11 @@ export default function StyledComponentsRegistry({
 
   if (typeof window !== 'undefined')
     return (
-      <>
-        {' '}
-        <ThemeProvider theme={theme}>
-          <GlobalStyle />
-          <Header />
-        </ThemeProvider>
+      <ThemeProvider theme={theme}>
+        <GlobalStyle />
+        <Header />
         {children}
-      </>
+      </ThemeProvider>
     );
 
   return (

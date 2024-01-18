@@ -7,7 +7,14 @@ export const theme = {
     secondary: {
       main: 'rgba(153, 153, 153, 1)'
     },
-    background: 'rgba(47, 46, 65, 1)'
+    tertiary: {
+      main: 'rgba(51, 51, 51, 1)'
+    },
+    background: {
+      primary: 'rgba(47, 46, 65, 1)',
+      secondary: 'rgba(0, 158, 221, 1)',
+      secondaryHover: 'rgba(0, 158, 221, 0.8)'
+    }
   },
   font: {
     small: '1.2rem',
@@ -15,10 +22,5 @@ export const theme = {
     medium: '1.6rem',
     large: '2rem',
     extraLarge: '2.4rem'
-  },
-  spacing: {
-    small: '1rem',
-    medium: '1.6rem',
-    extraLarge: '6.4rem'
   }
 };

@@ -38,16 +38,15 @@ const GlobalError = ({
           gap: '1rem'
         }}
       >
-        <h5>Ooops!</h5>
-        <p>
+        <h5 style={{ fontSize: '1.6rem', color: 'black' }}>Ooops!</h5>
+        <p style={{ fontSize: '1.6rem', color: 'black' }}>
           Ocorreu um erro inesperado. Clique no botão abaixo para tentar
           novamente
         </p>
-        <p>Sobre o erro: {error.message || 'Erro desconhecido'}</p>
-        <button onClick={() => reset()}>Tentar novamente</button>
-        <p>
-          Caso o erro persista, tire um print da tela e envie para o suporte
+        <p style={{ fontSize: '1.6rem', color: 'black' }}>
+          Sobre o erro: {error.message || 'Erro desconhecido'}
         </p>
+        <button onClick={() => reset()}>Tentar novamente</button>
         <button onClick={goToHome}>Volte à tela inicial</button>
       </div>
     </div>

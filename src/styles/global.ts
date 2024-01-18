@@ -6,7 +6,7 @@ export const GlobalStyle = createGlobalStyle`
         font-size: 10px;
     }
 
-    html{
+    html {
         height: 100%;
         min-height: 100%;
         box-sizing: border-box;
@@ -14,21 +14,22 @@ export const GlobalStyle = createGlobalStyle`
         padding: 0;
     }
 
-    body{
+    body {
         margin: 0;
         padding: 0;
         min-height: 100%;
+        background: ${({ theme }) => theme.color.background.primary};
     }
 
     h3 {
-        font-size: 2rem;
+        font-size: ${({ theme }) => theme.font.large};
         font-weight: 700;        
         color: ${({ theme }) => theme.color.primary.main};
         padding: 0;
     }
 
     h4, h5 {
-        font-size: 1.4rem;
+        font-size: ${({ theme }) => theme.font.smallMedium};
         font-weight: 600;
         color: ${({ theme }) => theme.color.primary.main};    
         margin: 0;        

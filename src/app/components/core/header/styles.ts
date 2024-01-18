@@ -7,7 +7,7 @@ export const SContainer = styled.header`
   gap: 1rem;
 
   padding: 0.4rem 1rem;
-  background: ${({ theme }) => theme.color.background};
+  background: ${({ theme }) => theme.color.background.primary};
   color: ${({ theme }) => theme.color.primary.main};
 
   @media (max-width: 868px) {
