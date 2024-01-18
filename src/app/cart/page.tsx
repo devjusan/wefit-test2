@@ -1,7 +1,11 @@
 'use client';
 import Image from 'next/image';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { useState } from 'react';
 import { useShoppingStore } from '../stores/shopping-cart';
 import emptyList from '@/src/assets/imgs/empty-list.svg';
+import buyed from '@/src/assets/imgs/buyed.svg';
 import del from '@/src/assets/icons/del.svg';
 import {
   SContainer,
@@ -17,12 +21,24 @@ import { theme } from '@/src/styles/theme';
 import { convertToCurrency } from '@/src/utils/format';
 import { ICard } from '@/src/types/card';
 import InputNumber from '../components/ui/input-number';
+import { cartSchema } from '../schemas';
+
+type FormValues = Record<string, number>;
 
 const Cart = () => {
   const router = useRouter();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid }
+  } = useForm<FormValues>({
+    resolver: zodResolver(cartSchema),
+    mode: 'all'
+  });
   const items = useShoppingStore((state) => state.items);
   const updateQuantity = useShoppingStore((state) => state.updateQuantity);
   const removeItem = useShoppingStore((state) => state.removeItem);
+  const [isFinished, setIsFinished] = useState(false);
 
   const handleBack = () => {
     router.push('/');
@@ -30,6 +46,13 @@ const Cart = () => {
 
   const handleRemoveItem = (item: ICard) => {
     removeItem(item);
+  };
+
+  const onSubmit = (data: FormValues) => {
+    console.log(data);
+    if (isValid) {
+      setIsFinished(true);
+    }
   };
 
   if (!items.length)
@@ -51,13 +74,37 @@ const Cart = () => {
         >
           Parece que não há nada por aqui :(
         </h3>
-        <Image src={emptyList} alt='Lista vazia' />
+        <Image src={emptyList} alt='Compra finalizada' />
+        <Button props={{ onClick: handleBack }}>Voltar</Button>
+      </SContainer>
+    );
+
+  if (isFinished)
+    return (
+      <SContainer
+        style={{
+          display: 'flex',
+          flexFlow: 'column nowrap',
+          justifyContent: 'center',
+          alignItems: 'center',
+          gap: '3.2rem',
+          padding: '4rem 2rem'
+        }}
+      >
+        <h3
+          style={{
+            color: '#111'
+          }}
+        >
+          Compra realizada com sucesso!
+        </h3>
+        <Image src={buyed} alt='Lista vazia' />
         <Button props={{ onClick: handleBack }}>Voltar</Button>
       </SContainer>
     );
 
   return (
-    <SContainer>
+    <SContainer as={'form'} onSubmit={handleSubmit(onSubmit)}>
       <SContainerHeader>
         <span
           style={{
@@ -130,13 +177,19 @@ const Cart = () => {
               }}
             >
               <InputNumber
-                value={quantity}
-                onChange={(e) => {
-                  const valueAsNumber = e.target.value;
-                  console.log(valueAsNumber);
-
-                  updateQuantity(card, valueAsNumber);
+                props={{
+                  ...register(String(card.id), {
+                    onChange: (e) => {
+                      const valueAsNumber = e.target.value;
+                      updateQuantity(card, valueAsNumber);
+                    },
+                    value: quantity,
+                    valueAsNumber: true,
+                    required: true
+                  })
                 }}
+                error={Boolean(errors[String(card.id)])}
+                errorMessage={errors[String(card.id)]?.message}
               />
             </SQtdSlot>
             <STotalSlot
@@ -179,7 +232,7 @@ const Cart = () => {
           padding: '2rem 0'
         }}
       >
-        <Button>Finalizar Pedido</Button>
+        <Button type='submit'>Finalizar Pedido</Button>
         <div
           style={{
             display: 'flex',

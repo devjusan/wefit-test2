@@ -19,6 +19,9 @@ export const theme = {
     borderColor: {
       primary: '#999999',
       secondary: '#d9d9d9'
+    },
+    error: {
+      main: 'rgba(255, 0, 0, 1)'
     }
   },
   font: {

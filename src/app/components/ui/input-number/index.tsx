@@ -1,56 +1,34 @@
 'use client';
-import { SContainer } from './styles';
+import { SContainer, SErrorContainer } from './styles';
 import plus from '@/src/assets/icons/plus.svg';
 import less from '@/src/assets/icons/less.svg';
 import Image from 'next/image';
-import { useRef, useState } from 'react';
+import { useCallback, useRef } from 'react';
 
 const InputNumber = ({
-  value,
-  onChange
+  error,
+  errorMessage,
+  props
 }: {
-  value?: number;
-  onChange?: (e: any) => void;
+  error?: boolean;
+  errorMessage?: string;
+  props?: React.HTMLProps<HTMLInputElement>;
 }) => {
-  const [localValue, setLocalValue] = useState(value || 0);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const inputRef = useRef<HTMLInputElement>();
 
-  const dispatchNativeEvent = (value: number) => {
+  const handlePlus = useCallback(() => {
     if (inputRef.current) {
-      const nativeInputValueSetter = Object.getOwnPropertyDescriptor(
-        window.HTMLInputElement.prototype,
-        'value'
-      )?.set;
-      nativeInputValueSetter?.call(inputRef.current, value);
-
-      const inputEvent = new Event('input', { bubbles: true });
-      inputRef.current.dispatchEvent(inputEvent);
+      inputRef.current.stepUp();
+      inputRef.current.dispatchEvent(new Event('input', { bubbles: true }));
     }
-  };
+  }, []);
 
-  const handlePlus = () => {
-    dispatchNativeEvent(localValue + 1);
-  };
-
-  const handleLess = () => {
-    if (localValue === 0) return;
-
-    dispatchNativeEvent(localValue - 1);
-  };
-
-  const handleOnChange = (e: any) => {
-    const { valueAsNumber } = e.target;
-
-    setLocalValue(valueAsNumber);
-
-    if (onChange) {
-      onChange({
-        target: {
-          value: valueAsNumber
-        }
-      });
+  const handleLess = useCallback(() => {
+    if (inputRef.current) {
+      inputRef.current.stepDown();
+      inputRef.current.dispatchEvent(new Event('input', { bubbles: true }));
     }
-  };
+  }, []);
 
   return (
     <SContainer>
@@ -59,16 +37,20 @@ const InputNumber = ({
       </div>
       <input
         type='number'
-        name='input-number'
-        id='input-number'
-        ref={inputRef}
         min={0}
-        onChange={handleOnChange}
-        value={localValue}
+        {...props}
+        ref={(e) => {
+          inputRef.current = e as HTMLInputElement;
+          const { ref } = props as any;
+
+          ref?.(e);
+        }}
       />
       <div role='button' onClick={handleLess}>
         <Image src={less} alt='Remover número' width={18} height={18} />{' '}
       </div>
+
+      {error ? <SErrorContainer>{errorMessage}</SErrorContainer> : null}
     </SContainer>
   );
 };
