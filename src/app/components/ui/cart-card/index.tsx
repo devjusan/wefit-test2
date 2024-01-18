@@ -22,12 +22,7 @@ const Card = ({
   const addItem = useShoppingStore((state) => state.addOrUpdateItem);
 
   const handleAddItem = () => {
-    addItem({
-      id,
-      image: img,
-      price,
-      title
-    });
+    addItem({ id, image: img, price, title });
   };
 
   const itemIfCan = useMemo(() => {

@@ -14,6 +14,7 @@ export type IShoppingCard = {
 export type IShoppingStore = {
   items: Array<IShoppingCard>;
   itemsMapAux: Map<number, IShoppingCard>;
+  updateQuantity: (item: ICard, quantity: number) => void;
   addOrUpdateItem: (item: ICard) => void;
   removeItem: (item: ICard) => void;
 };

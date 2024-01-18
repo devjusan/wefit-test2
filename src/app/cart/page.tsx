@@ -16,10 +16,12 @@ import { useRouter } from 'next/navigation';
 import { theme } from '@/src/styles/theme';
 import { convertToCurrency } from '@/src/utils/format';
 import { ICard } from '@/src/types/card';
+import InputNumber from '../components/ui/input-number';
 
 const Cart = () => {
   const router = useRouter();
   const items = useShoppingStore((state) => state.items);
+  const updateQuantity = useShoppingStore((state) => state.updateQuantity);
   const removeItem = useShoppingStore((state) => state.removeItem);
 
   const handleBack = () => {
@@ -127,7 +129,15 @@ const Cart = () => {
                 gridArea: 'qtd'
               }}
             >
-              <span>1</span>
+              <InputNumber
+                value={quantity}
+                onChange={(e) => {
+                  const valueAsNumber = e.target.value;
+                  console.log(valueAsNumber);
+
+                  updateQuantity(card, valueAsNumber);
+                }}
+              />
             </SQtdSlot>
             <STotalSlot
               style={{

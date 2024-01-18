@@ -4,6 +4,35 @@ import { create } from 'zustand';
 export const useShoppingStore = create<IShoppingStore>((set) => ({
   items: [],
   itemsMapAux: new Map(),
+  updateQuantity: (item: ICard, quantity: number) =>
+    set((state) => {
+      const itemIfExists = state.itemsMapAux.get(item.id);
+
+      if (!itemIfExists) {
+        return state;
+      }
+
+      const shoppingItem = {
+        id: item.id,
+        quantity,
+        card: item
+      } as IShoppingCard;
+
+      state.itemsMapAux.set(item.id, shoppingItem);
+
+      const items = state.items.map((i) => {
+        if (i.id === item.id) {
+          return shoppingItem;
+        }
+
+        return i;
+      });
+
+      return {
+        items,
+        itemsMapAux: state.itemsMapAux
+      };
+    }),
   addOrUpdateItem: (item: ICard) =>
     set((state) => {
       const itemIfExists = state.itemsMapAux.get(item.id);

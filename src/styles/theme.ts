@@ -17,7 +17,8 @@ export const theme = {
       tertiary: '#039B00'
     },
     borderColor: {
-      primary: '#999999'
+      primary: '#999999',
+      secondary: '#d9d9d9'
     }
   },
   font: {
