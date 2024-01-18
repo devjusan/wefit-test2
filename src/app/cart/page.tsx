@@ -64,7 +64,7 @@ const Cart = () => {
     }
   };
 
-  if (!items.length)
+  if (!items.length && !isFinished)
     return (
       <SContainer
         style={{
@@ -78,7 +78,7 @@ const Cart = () => {
       >
         <h3
           style={{
-            color: '#111'
+            color: theme.color.tertiary.main
           }}
         >
           Parece que não há nada por aqui :(
@@ -102,7 +102,7 @@ const Cart = () => {
       >
         <h3
           style={{
-            color: '#111'
+            color: theme.color.tertiary.main
           }}
         >
           Compra realizada com sucesso!
