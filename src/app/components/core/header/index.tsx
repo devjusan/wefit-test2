@@ -17,9 +17,20 @@ const Header: React.FC = () => {
     router.push('/cart');
   };
 
+  const onLogoClick = () => {
+    router.push('/');
+  };
+
   return (
     <SContainer>
-      <h3>WeMovies</h3>{' '}
+      <div
+        onClick={onLogoClick}
+        style={{
+          cursor: 'pointer'
+        }}
+      >
+        <h3>WeMovies</h3>
+      </div>{' '}
       <SCartContainer onClick={onCartClick}>
         <div>
           <h5>Meu Carrinho</h5>

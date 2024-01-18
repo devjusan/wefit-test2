@@ -41,7 +41,7 @@ const Card = ({
       <Image
         priority
         src={img}
-        alt='Image de um filme'
+        alt={'Image do filme ' + title}
         width={147}
         height={188}
       />

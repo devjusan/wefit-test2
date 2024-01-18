@@ -16,7 +16,7 @@ export const GlobalStyle = createGlobalStyle`
 
     body {
         margin: 0;
-        padding: 0;
+        padding: 0 1rem;
         min-height: 100%;
         background: ${({ theme }) => theme.color.background.primary};
     }
@@ -33,6 +33,13 @@ export const GlobalStyle = createGlobalStyle`
         font-weight: 600;
         color: ${({ theme }) => theme.color.primary.main};    
         margin: 0;        
+        padding: 0;
+    }
+
+    hr {
+        border: 1px solid ${({ theme }) => theme.color.borderColor.primary};
+        
+        margin: 0;
         padding: 0;
     }
 `;

@@ -1,9 +1,8 @@
 'use client';
 import { styled } from 'styled-components';
-import Card from './components/ui/card';
+import Card from './components/ui/cart-card';
 import LoadingSpinner from './loading';
 import { ICard } from '../types/card';
-import { convertToCurrency } from '../utils/format';
 import useFetch from './hooks/useFetch';
 
 const Container = styled.div`

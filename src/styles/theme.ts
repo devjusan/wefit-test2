@@ -15,6 +15,9 @@ export const theme = {
       secondary: 'rgba(0, 158, 221, 1)',
       secondaryHover: 'rgba(0, 158, 221, 0.6)',
       tertiary: '#039B00'
+    },
+    borderColor: {
+      primary: '#999999'
     }
   },
   font: {
