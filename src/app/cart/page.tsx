@@ -49,7 +49,6 @@ const Cart = () => {
   };
 
   const onSubmit = (data: FormValues) => {
-    console.log(data);
     if (isValid) {
       setIsFinished(true);
     }
