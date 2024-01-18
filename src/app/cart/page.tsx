@@ -19,9 +19,11 @@ import Button from '../components/ui/button';
 import { useRouter } from 'next/navigation';
 import { theme } from '@/src/styles/theme';
 import { convertToCurrency } from '@/src/utils/format';
-import { ICard } from '@/src/types/card';
+import { ICard, IShoppingCard } from '@/src/types/card';
 import InputNumber from '../components/ui/input-number';
 import { cartSchema } from '../schemas';
+import { useLocalStorage } from 'usehooks-ts';
+import { SESSION_KEY } from '@/src/constants/storage';
 
 type FormValues = Record<string, number>;
 
@@ -35,7 +37,12 @@ const Cart = () => {
     resolver: zodResolver(cartSchema),
     mode: 'all'
   });
+  const [, setShoppingCard] = useLocalStorage<Array<IShoppingCard>>(
+    SESSION_KEY,
+    []
+  );
   const items = useShoppingStore((state) => state.items);
+
   const updateQuantity = useShoppingStore((state) => state.updateQuantity);
   const removeItem = useShoppingStore((state) => state.removeItem);
   const [isFinished, setIsFinished] = useState(false);
@@ -50,7 +57,10 @@ const Cart = () => {
 
   const onSubmit = (data: FormValues) => {
     if (isValid) {
+      // handle submit data to API...
       setIsFinished(true);
+      setShoppingCard([]);
+      useShoppingStore.setState({ items: [], itemsMapAux: new Map() });
     }
   };
 
