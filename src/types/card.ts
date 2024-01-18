@@ -7,12 +7,13 @@ export type ICard = {
 
 export type IShoppingCard = {
   id: number;
-  quantity: number;
   card: ICard;
+  quantity?: number;
 };
 
 export type IShoppingStore = {
   items: Array<IShoppingCard>;
-  addItem: (item: ICard) => void;
+  itemsMapAux: Map<number, IShoppingCard>;
+  addOrUpdateItem: (item: ICard) => void;
   removeItem: (item: ICard) => void;
 };

@@ -3,9 +3,16 @@ import Image from 'next/image';
 import { SContainer, SItensContainer, SCartContainer } from './styles';
 import wallet from '@/src/assets/icons/wallet.svg';
 import { useRouter } from 'next/navigation';
+import { useShoppingStore } from '@/src/app/stores/shopping-cart';
 
 const Header: React.FC = () => {
   const router = useRouter();
+  const quantity = useShoppingStore((state) =>
+    state.items.reduce((acc, item) => {
+      return acc + Number(item.quantity) || 0;
+    }, 0)
+  );
+
   const onCartClick = () => {
     router.push('/cart');
   };
@@ -16,7 +23,10 @@ const Header: React.FC = () => {
       <SCartContainer onClick={onCartClick}>
         <div>
           <h5>Meu Carrinho</h5>
-          <SItensContainer> 0 itens </SItensContainer>
+          <SItensContainer>
+            {' '}
+            {quantity} {quantity > 1 ? 'itens' : 'item'}{' '}
+          </SItensContainer>
         </div>
         <Image
           src={wallet}

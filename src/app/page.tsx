@@ -1,6 +1,4 @@
 'use client';
-
-import { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
 import Card from './components/ui/card';
 import LoadingSpinner from './loading';
@@ -15,6 +13,7 @@ const Container = styled.div`
   align-items: center;
   gap: 16px;
   padding: 16px;
+  max-width: 1200px;
 `;
 
 const Home = () => {
@@ -47,8 +46,9 @@ const Home = () => {
       {response.map((card: ICard) => (
         <Card
           key={card.id}
+          id={card.id}
           title={card.title}
-          price={convertToCurrency(card.price)}
+          price={card.price}
           img={card.image}
         />
       ))}

@@ -13,7 +13,8 @@ export const theme = {
     background: {
       primary: 'rgba(47, 46, 65, 1)',
       secondary: 'rgba(0, 158, 221, 1)',
-      secondaryHover: 'rgba(0, 158, 221, 0.8)'
+      secondaryHover: 'rgba(0, 158, 221, 0.6)',
+      tertiary: '#039B00'
     }
   },
   font: {
