@@ -28,7 +28,7 @@ const Home = () => {
     );
   }
 
-  return true ? (
+  return isLoading ? (
     <div
       style={{
         display: 'flex',
