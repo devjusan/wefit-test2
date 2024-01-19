@@ -25,7 +25,9 @@ export const GlobalStyle = createGlobalStyle`
         font-size: ${({ theme }) => theme.font.large};
         font-weight: 700;        
         color: ${({ theme }) => theme.color.primary.main};
-        padding: 0;
+        padding: 0;        
+        margin: 0;        
+
     }
 
     h4, h5 {

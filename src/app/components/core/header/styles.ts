@@ -6,7 +6,7 @@ export const SContainer = styled.header`
   align-items: center;
   gap: 1rem;
 
-  padding: 0.4rem 1rem;
+  padding: 1.6rem 1rem;
   background: ${({ theme }) => theme.color.background.primary};
   color: ${({ theme }) => theme.color.primary.main};
 
@@ -18,13 +18,19 @@ export const SContainer = styled.header`
 export const SCartContainer = styled.div`
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 1.2rem;
   cursor: pointer;
 
   & div {
     display: flex;
     flex-flow: column nowrap;
     align-items: flex-end;
+  }
+
+  @media (max-width: 568px) {
+    & div h5 {
+      display: none;
+    }
   }
 `;
 

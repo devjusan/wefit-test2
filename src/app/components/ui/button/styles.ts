@@ -10,7 +10,7 @@ export const SContainer = styled.button`
 
   padding: 11px 20px;
   width: 100%;
-  max-width: 300px;
+  max-width: 350px;
   font-weight: 700;
   text-transform: uppercase;
   background: ${({ theme }) => theme.color.background.secondary};
