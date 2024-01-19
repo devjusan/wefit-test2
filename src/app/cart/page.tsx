@@ -2,7 +2,7 @@
 import Image from 'next/image';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useShoppingStore } from '../stores/shopping-cart';
 import emptyList from '@/src/assets/imgs/empty-list.svg';
 import buyed from '@/src/assets/imgs/buyed.svg';
@@ -26,6 +26,7 @@ import { cartSchema } from '../schemas';
 import { useLocalStorage, useMediaQuery } from 'usehooks-ts';
 import { SESSION_KEY } from '@/src/constants/storage';
 import CartMobile from './components/cart-mobile';
+import LoadingSpinner from '../loading';
 
 type FormValues = Record<string, number>;
 
@@ -40,7 +41,7 @@ const Cart = () => {
     mode: 'all'
   });
   const media = useMediaQuery('(max-width: 568px)');
-  const [, setShoppingCard] = useLocalStorage<Array<IShoppingCard>>(
+  const [shoppingCard, setShoppingCard] = useLocalStorage<Array<IShoppingCard>>(
     SESSION_KEY,
     []
   );
@@ -48,6 +49,7 @@ const Cart = () => {
   const updateQuantity = useShoppingStore((state) => state.updateQuantity);
   const removeItem = useShoppingStore((state) => state.removeItem);
   const [isFinished, setIsFinished] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const handleBack = () => {
     router.push('/');
@@ -65,6 +67,30 @@ const Cart = () => {
       useShoppingStore.setState({ items: [], itemsMapAux: new Map() });
     }
   };
+
+  useEffect(() => {
+    if (shoppingCard.length) {
+      setLoading(false);
+    }
+  }, [shoppingCard]);
+
+  if (loading) {
+    return (
+      <div
+        style={{
+          width: '100%',
+          height: 'calc(100dvh - 120px)',
+          display: 'flex',
+          flexFlow: 'column nowrap',
+          justifyContent: 'center',
+          alignItems: 'center',
+          overflow: 'hidden'
+        }}
+      >
+        <LoadingSpinner />
+      </div>
+    );
+  }
 
   if (!items.length && !isFinished)
     return (
@@ -85,7 +111,7 @@ const Cart = () => {
         >
           Parece que não há nada por aqui :(
         </h3>
-        <Image src={emptyList} alt='Compra finalizada' />
+        <Image src={emptyList} alt='Compra finalizada' priority />
         <Button props={{ onClick: handleBack }}>Voltar</Button>
       </SContainer>
     );
@@ -109,7 +135,7 @@ const Cart = () => {
         >
           Compra realizada com sucesso!
         </h3>
-        <Image src={buyed} alt='Lista vazia' />
+        <Image src={buyed} alt='Lista vazia' priority />
         <Button props={{ onClick: handleBack }}>Voltar</Button>
       </SContainer>
     );

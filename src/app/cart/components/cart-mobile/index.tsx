@@ -60,6 +60,7 @@ const CartMobile = ({
                 }}
                 width={18}
                 height={18}
+                priority
               />
             </div>
           </div>
