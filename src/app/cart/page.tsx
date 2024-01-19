@@ -172,7 +172,9 @@ const Cart = () => {
         style={{
           display: 'flex',
           flexFlow: 'column nowrap',
-          gap: '2rem'
+          gap: '2rem',
+          height: 'calc(100dvh - 250px)',
+          overflowY: 'auto'
         }}
       >
         {media
