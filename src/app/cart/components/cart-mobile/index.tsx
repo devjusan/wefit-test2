@@ -32,7 +32,7 @@ const CartMobile = ({
   const updateQuantity = useShoppingStore((state) => state.updateQuantity);
 
   return (
-    <SContainer>
+    <SContainer data-testid={String(card.id)}>
       <Image
         src={card.image}
         alt={'Imagem do filme ' + card.title}
@@ -61,6 +61,7 @@ const CartMobile = ({
                 width={18}
                 height={18}
                 priority
+                data-testid='remove-item'
               />
             </div>
           </div>

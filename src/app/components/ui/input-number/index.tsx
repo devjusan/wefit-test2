@@ -32,7 +32,7 @@ const InputNumber = ({
 
   return (
     <SContainer>
-      <div role='button' onClick={handlePlus}>
+      <div role='button' onClick={handlePlus} data-testid='add'>
         <Image src={plus} alt='Adicionar número' width={18} height={18} />
       </div>
       <input
@@ -46,11 +46,15 @@ const InputNumber = ({
           ref?.(e);
         }}
       />
-      <div role='button' onClick={handleLess}>
+      <div role='button' onClick={handleLess} data-testid='remove'>
         <Image src={less} alt='Remover número' width={18} height={18} />{' '}
       </div>
 
-      {error ? <SErrorContainer>{errorMessage}</SErrorContainer> : null}
+      {error ? (
+        <SErrorContainer data-testid='error-message'>
+          {errorMessage}
+        </SErrorContainer>
+      ) : null}
     </SContainer>
   );
 };

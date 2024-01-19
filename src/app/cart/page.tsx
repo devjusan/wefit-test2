@@ -141,7 +141,11 @@ const Cart = () => {
     );
 
   return (
-    <SContainer as={'form'} onSubmit={handleSubmit(onSubmit)}>
+    <SContainer
+      as={'form'}
+      onSubmit={handleSubmit(onSubmit)}
+      data-testid='cart'
+    >
       {media ? null : (
         <SContainerHeader>
           <span
@@ -189,7 +193,7 @@ const Cart = () => {
               />
             ))
           : items.map(({ card, quantity, id }) => (
-              <SContainerContent key={id}>
+              <SContainerContent key={id} data-testid={String(id)}>
                 <SProductSlot
                   style={{
                     gridArea: 'product'
@@ -268,6 +272,7 @@ const Cart = () => {
                       }}
                       width={18}
                       height={18}
+                      data-testid='remove-item'
                     />
                   </div>
                 </STotalSlot>

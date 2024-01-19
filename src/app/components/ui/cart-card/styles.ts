@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const SContainer = styled.div`
+export const SContainer = styled.article`
   display: flex;
   flex-direction: column;
   align-items: center;
