@@ -6,27 +6,18 @@ import { useEffect, useState } from 'react';
 import { useShoppingStore } from '../stores/shopping-cart';
 import emptyList from '@/src/assets/imgs/empty-list.svg';
 import buyed from '@/src/assets/imgs/buyed.svg';
-import del from '@/src/assets/icons/del.svg';
-import {
-  SContainer,
-  SContainerContent,
-  SContainerFooter,
-  SContainerHeader,
-  SProductSlot,
-  SQtdSlot,
-  STotalSlot
-} from './styles';
+import { SContainer, SContainerFooter, SContainerHeader } from './styles';
 import Button from '../components/ui/button';
 import { useRouter } from 'next/navigation';
 import { theme } from '@/src/styles/theme';
 import { convertToCurrency } from '@/src/utils/format';
 import { ICard, IShoppingCard } from '@/src/types/card';
-import InputNumber from '../components/ui/input-number';
 import { cartSchema } from '../schemas';
 import { useLocalStorage, useMediaQuery } from 'usehooks-ts';
 import { SESSION_KEY } from '@/src/constants/storage';
-import CartMobile from './components/cart-mobile';
+import CartSlotMobile from './components/cart-slot-mobile';
 import LoadingSpinner from '../loading';
+import CartSlot from './components/cart-slot';
 
 type FormValues = Record<string, number>;
 
@@ -40,13 +31,12 @@ const Cart = () => {
     resolver: zodResolver(cartSchema),
     mode: 'all'
   });
-  const media = useMediaQuery('(max-width: 568px)');
+  const media = useMediaQuery('(max-width: 668px)');
   const [shoppingCard, setShoppingCard] = useLocalStorage<Array<IShoppingCard>>(
     SESSION_KEY,
     []
   );
   const items = useShoppingStore((state) => state.items);
-  const updateQuantity = useShoppingStore((state) => state.updateQuantity);
   const removeItem = useShoppingStore((state) => state.removeItem);
   const [isFinished, setIsFinished] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -183,7 +173,7 @@ const Cart = () => {
       >
         {media
           ? items.map(({ card, id, quantity }) => (
-              <CartMobile
+              <CartSlotMobile
                 card={card}
                 quantity={quantity || 0}
                 key={id}
@@ -193,90 +183,14 @@ const Cart = () => {
               />
             ))
           : items.map(({ card, quantity, id }) => (
-              <SContainerContent key={id} data-testid={String(id)}>
-                <SProductSlot
-                  style={{
-                    gridArea: 'product'
-                  }}
-                >
-                  <Image
-                    src={card.image}
-                    alt={'Imagem do filme ' + card.title}
-                    width={90}
-                    height={114}
-                  />
-                  <div>
-                    <h3
-                      style={{
-                        color: theme.color.tertiary.main
-                      }}
-                    >
-                      {card.title}
-                    </h3>
-                    <span
-                      style={{
-                        color: theme.color.tertiary.main,
-                        fontWeight: 700,
-                        fontSize: theme.font.medium
-                      }}
-                    >
-                      {' '}
-                      {convertToCurrency(card.price)}{' '}
-                    </span>
-                  </div>
-                </SProductSlot>
-                <SQtdSlot
-                  style={{
-                    gridArea: 'qtd'
-                  }}
-                >
-                  <InputNumber
-                    props={{
-                      ...register(String(card.id), {
-                        onChange: (e) => {
-                          const valueAsNumber = e.target.value;
-                          updateQuantity(card, valueAsNumber);
-                        },
-                        value: quantity,
-                        valueAsNumber: true,
-                        required: true
-                      })
-                    }}
-                    error={Boolean(errors[String(card.id)])}
-                    errorMessage={errors[String(card.id)]?.message}
-                  />
-                </SQtdSlot>
-                <STotalSlot
-                  style={{
-                    gridArea: 'total',
-                    display: 'flex',
-                    flexFlow: 'row nowrap',
-                    justifyContent: 'space-between'
-                  }}
-                >
-                  <span
-                    style={{
-                      color: theme.color.tertiary.main,
-                      fontWeight: 700,
-                      fontSize: theme.font.medium
-                    }}
-                  >
-                    {convertToCurrency(card.price * (quantity || 0))}
-                  </span>
-                  <div role='button' onClick={() => handleRemoveItem(card)}>
-                    <Image
-                      src={del}
-                      alt='Deletar ícone'
-                      style={{
-                        cursor: 'pointer'
-                      }}
-                      width={18}
-                      height={18}
-                      data-testid='remove-item'
-                    />
-                  </div>
-                </STotalSlot>
-              </SContainerContent>
+              <CartSlot
+                key={id}
+                card={card}
+                quantity={quantity || 0}
+                errors={errors}
+                register={register}
+                handleRemoveItem={handleRemoveItem}
+              />
             ))}
       </div>
       <hr />
