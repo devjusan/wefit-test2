@@ -1,4 +1,11 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+
+const spin = keyframes`
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+`;
 
 export const SContainer = styled.div`
   display: flex;
@@ -7,12 +14,11 @@ export const SContainer = styled.div`
   height: 100%;
   width: 100%;
 
-  -webkit-animation: spin 1.5 infinite;
-  animation: spin 1.5 infinite;
-
-  @keyframes spin {
-    100% {
-      transform: rotate(360deg);
-    }
+  & img {
+    animation-name: ${spin};
+    animation-duration: 0.8s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    overflow: hidden;
   }
 `;
